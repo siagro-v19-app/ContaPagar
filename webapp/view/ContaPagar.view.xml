@@ -1,0 +1,156 @@
+<mvc:View
+	controllerName="br.com.idxtecContaPagar.controller.ContaPagar"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:mvc="sap.ui.core.mvc"
+	displayBlock="true"
+	xmlns="sap.m"
+	xmlns:t="sap.ui.table">
+	<App id="app">
+		<pages>
+			<Page>
+				<content>
+					<t:Table id="tableContaPagar"
+						rows="{path: '/ContaPagars',
+								parameters: {
+									expand: 'CentroCustoDetails,
+									TipoTituloDetails,
+									ParceiroNegocioDetails,
+									PlanoContaDetails'
+								}
+							}"
+						alternateRowColors="true">
+						<t:toolbar>
+							<Toolbar>
+								<Title text="Contas a pagar"/> 
+							</Toolbar> 
+						</t:toolbar>
+						<t:columns>
+							<t:Column filterProperty="Titulo" sortProperty="Titulo">
+								<Label text="Título"/>
+								<t:template>
+									<Text text="{Titulo}"/>
+								</t:template>
+							</t:Column>
+							<t:Column filterProperty="TipoTituloDetails/Descricao" sortProperty="TipoTituloDetails/Descricao">
+								<Label text="Tipo de título"/>
+								<t:template>
+									<Text text="{TipoTituloDetails/Descricao}"/>
+								</t:template>
+							</t:Column>
+							<t:Column filterProperty="Valor" sortProperty="Valor">
+								<Label text="Valor"/>
+								<t:template>
+									<Text text="{path: 'Valor', 
+										type: 'sap.ui.model.odata.type.Single',
+	                            		formatOptions:{
+	                            			decimals: 2,
+	                                		decimalSeparator: ','
+	                            		}}"/>
+								</t:template>
+							</t:Column>
+							<t:Column filterProperty="Acrescimo" sortProperty="Acrescimo">
+								<Label text="Acréscimo"/>
+								<t:template>
+									<Text text="{path: 'Acrescimo',
+										type: 'sap.ui.model.odata.type.Single',
+		                            		formatOptions:{
+		                            			decimals: 2,
+		                                		decimalSeparator: ','
+		                            		}}"/>
+								</t:template>
+							</t:Column>
+							<t:Column filterProperty="Desconto" sortProperty="Desconto">
+								<Label text="Desconto"/>
+								<t:template>
+									<Text text="{path: 'Desconto',
+										type: 'sap.ui.model.odata.type.Single',
+		                            		formatOptions:{
+		                            			decimals: 2,
+		                                		decimalSeparator: ','
+		                            		}}"/>
+								</t:template>
+							</t:Column>
+							<t:Column filterProperty="Emissao" sortProperty="Emissao">
+								<Label text="Emissão"/>
+								<t:template>
+									<Text text="{
+										path : 'Emissao',
+										type : 'sap.ui.model.type.Date',
+										formatOptions: {
+											style : 'short'
+										}}"/>
+								</t:template>
+							</t:Column>
+							<t:Column filterProperty="Vencimento" sortProperty="Vencimento">
+								<Label text="Vencimento"/>
+								<t:template>
+									<Text text="{
+										path : 'Vencimento',
+										type : 'sap.ui.model.type.Date',
+										formatOptions: {
+											style : 'short'
+										}}"/>
+								</t:template>
+							</t:Column>
+							<t:Column filterProperty="Total" sortProperty="Total">
+								<Label text="Total"/>
+								<t:template>
+									<Text text="{path: 'Total',
+										type: 'sap.ui.model.odata.type.Single',
+		                            		formatOptions:{
+		                            			decimals: 2,
+		                                		decimalSeparator: ','
+		                            		}}"/>
+								</t:template>
+							</t:Column>
+							<t:Column filterProperty="Saldo" sortProperty="Saldo">
+								<Label text="Saldo"/>
+								<t:template>
+									<Text text="{path: 'Saldo',
+										type: 'sap.ui.model.odata.type.Single',
+		                            		formatOptions:{
+		                            			decimals: 2,
+		                                		decimalSeparator: ','
+		                            		}}"/>
+								</t:template>
+							</t:Column>
+							<t:Column filterProperty="ParceiroNegocioDetails/RazaoSocial" sortProperty="ParceiroNegocioDetails/RazaoSocial">
+								<Label text="Parceiro de negócio"/>
+								<t:template>
+									<Text text="{ParceiroNegocioDetails/RazaoSocial}"/>
+								</t:template>
+							</t:Column>
+							<t:Column filterProperty="CentroCustoDetails/Descricao" sortProperty="CentroCustoDetails/Descricao">
+								<Label text="Centro de custo"/>
+								<t:template>
+									<Text text="{CentroCustoDetails/Descricao}"/>
+								</t:template>
+							</t:Column>
+							<t:Column filterProperty="PlanoContaDetails/Descricao" sortProperty="PlanoContaDetails/Descricao">
+								<Label text="Conta contábil"/>
+								<t:template>
+									<Text text="{PlanoContaDetails/Descricao}"/>
+								</t:template>
+							</t:Column>
+							<t:Column filterProperty="Historico" sortProperty="Historico">
+								<Label text="Histórico"/>
+								<t:template>
+									<Text text="{Historico}"/>
+								</t:template>
+							</t:Column>
+						</t:columns>
+					</t:Table>
+				</content>
+				<footer>
+					<Toolbar>
+						<Button icon="sap-icon://refresh" press="onRefresh"/>
+						<ToolbarSpacer/>
+						<Button text="Incluir novo" press="onIncluir"/>
+						<Button text="Editar" press="onEditar"/>
+						<Button text="Remover" press="onRemover"/>
+					</Toolbar>
+				</footer>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>
