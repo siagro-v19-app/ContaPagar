@@ -7,145 +7,147 @@
 	xmlns:f="sap.ui.layout.form">
 	<App>
 		<pages>
-			<Page showNavButton="true"
-				navButtonPress="onVoltar">
+			<Page showHeader="false">
 				<content>
-					<VBox class="sapUiSmallMargin">	
-						<f:SimpleForm id="SimpleFormChange480_Trial"
-						editable="true"
-						layout="ResponsiveGridLayout"
-						title="{view>/titulo}"
-						labelSpanXL="4"
-						labelSpanL="4"
-						labelSpanM="4"
-						labelSpanS="12"
-						adjustLabelSpan="false"
-						emptySpanXL="0"
-						emptySpanL="0"
-						emptySpanM="0"
-						emptySpanS="0"
-						columnsXL="3"
-						columnsL="2"
-						columnsM="2"
-						singleContainerFullSize="false">
-							<f:content>
-								<Label text="Título" labelFor="titulo"/>
-								<Input id="titulo" value="{model>/Titulo}" required="true"/>
-								
-								<Label text="Tipo de título" labelFor="tipotitulo" required="true"/>
-								<ComboBox selectedKey="{model>/TipoTitulo}"
-									items="{path: '/TipoTitulos'}"
-									id="tipotitulo"> 
-									<core:ListItem key="{Codigo}" text="{Descricao}"/>
-								</ComboBox>
-								
-								<Label text="Valor" labelFor="valor" required="true"/>
-								<Input id="valor" value="{path: 'model>/Valor', 
-										type: 'sap.ui.model.odata.type.Single',
-			                            formatOptions:{
-			                                decimals: 2,
-			                                decimalSeparator: ','
-			                            }}"/>
-			                            
-			                    <Label text="Acréscimo" labelFor="acrescimo"/>
-								<Input id="acrescimo" value="{path: 'model>/Acrescimo', 
-										type: 'sap.ui.model.odata.type.Single',
-			                            formatOptions:{
-			                                decimals: 2,
-			                                decimalSeparator: ','
-			                            }}"/>
-			                            
-			                	<Label text="Desconto" labelFor="desconto"/>
-								<Input id="desconto" value="{path: 'model>/Desconto', 
-										type: 'sap.ui.model.odata.type.Single',
-			                            formatOptions:{
-			                                decimals: 2,
-			                                decimalSeparator: ','
-			                            }}"/>
-			                            
-			                    <Label text="Emissão" labelFor="emissao"/>
-								<DatePicker id="emissao" dateValue="{model>/Emissao}" displayFormat="dd.MM.yyyy" placeholder="dd.mm.aaaa"/>
-								
-								<Label text="Vencimento" labelFor="vencimento"/>
-								<DatePicker id="vencimento" dateValue="{model>/Vencimento}" displayFormat="dd.MM.yyyy" placeholder="dd.mm.aaaa"/>
-								
-								<Label text="Total" labelFor="total"/>
-								<Input id="total" value="{path: 'model>/Total', 
-										type: 'sap.ui.model.odata.type.Single',
-			                            formatOptions:{
-			                                decimals: 2,
-			                                decimalSeparator: ','
-			                            }}"/>
-								
-								<Label text="Saldo" labelFor="saldo"/>
-								<Input id="saldo" value="{path: 'model>/Saldo', 
-										type: 'sap.ui.model.odata.type.Single',
-			                            formatOptions:{
-			                                decimals: 2,
-			                                decimalSeparator: ','
-			                            }}"/>
-			                            
-			                    <Label text="Parceiro de negócio" labelFor="parceironegocio"/>
-								<Input selectedKey="{model>/ParceiroNegocio}"
-									textFormatMode="KeyValue"
-									showSuggestion="true"
-									showValueHelp="true"
-									valueHelpRequest="handleSearchParceiro"
-									suggestionItems="{
-										path: '/ParceiroNegocios',
-										events: {
-											dataReceived: '.parceiroNegocioReceived'
-										}}"
-									id="parceironegocio">
-									<suggestionItems>
-										<core:ListItem key="{Id}" text="{RazaoSocial}"/>
-									</suggestionItems>
-								</Input>
-								
-								<Label text="Centro de custo" labelFor="centrocusto"/>
-								<Input selectedKey="{model>/CentroCusto}"
-									textFormatMode="KeyValue"
-									showSuggestion="true"
-									showValueHelp="true"
-									valueHelpRequest="handleSearchCentroCusto"
-									suggestionItems="{
-										path: '/CentroCustos',
-										events: {
-											dataReceived: '.centroCustoReceived'
-										}}"
-									id="centrocusto">
-									<suggestionItems>
-										<core:ListItem key="{Id}" text="{Descricao}"/>
-									</suggestionItems>
-								</Input>
-								
-								<Label text="Conta contábil" labelFor="contacontabil"/>
-								<Input selectedKey="{model>/ContaContabil}"
-									textFormatMode="KeyValue"
-									showSuggestion="true"
-									showValueHelp="true"
-									valueHelpRequest="handleSearchContaContabil"
-									suggestionItems="{
-										path: '/PlanoContas',
-										events: {
-											dataReceived: '.contaContabilReceived'
-										}}"
-									id="contacontabil">
-									<suggestionItems>
+					<VBox class="sapUiSmallMargin">
+						<Panel headerText="Contas a Pagar">
+							<f:SimpleForm id="formConta"
+								editable="true"
+								layout="ResponsiveGridLayout"
+								labelSpanXL="4"
+								labelSpanL="4"
+								labelSpanM="4"
+								labelSpanS="12"
+								adjustLabelSpan="false"
+								emptySpanXL="0"
+								emptySpanL="0"
+								emptySpanM="0"
+								emptySpanS="0"
+								columnsXL="3"
+								columnsL="2"
+								columnsM="2"
+								singleContainerFullSize="false">
+								<f:content>
+									<core:Title text="{view>/titulo}"/>
+									<Label text="Título" labelFor="titulo"/>
+									<Input id="titulo" value="{model>/Titulo}" required="true"/>
+									
+									<Label text="Tipo de título" labelFor="tipotitulo" required="true"/>
+									<ComboBox selectedKey="{model>/TipoTitulo}"
+										items="{path: '/TipoTitulos'}"
+										id="tipotitulo"> 
 										<core:ListItem key="{Codigo}" text="{Descricao}"/>
-									</suggestionItems>
-								</Input>
-								
-								<Label text="Histórico" labelFor="historico"/>
-								<Input id="historico" value="{model>/Historico}"/>
-							</f:content>
-						</f:SimpleForm>
+									</ComboBox>
+									
+									<Label text="Valor" labelFor="valor" required="true"/>
+									<Input id="valor" value="{path: 'model>/Valor', 
+											type: 'sap.ui.model.odata.type.Single',
+				                            formatOptions:{
+				                                decimals: 2,
+				                                decimalSeparator: ','
+				                            }}"/>
+				                            
+				                    <Label text="Acréscimo" labelFor="acrescimo"/>
+									<Input id="acrescimo" value="{path: 'model>/Acrescimo', 
+											type: 'sap.ui.model.odata.type.Single',
+				                            formatOptions:{
+				                                decimals: 2,
+				                                decimalSeparator: ','
+				                            }}"/>
+				                            
+				                	<Label text="Desconto" labelFor="desconto"/>
+									<Input id="desconto" value="{path: 'model>/Desconto', 
+											type: 'sap.ui.model.odata.type.Single',
+				                            formatOptions:{
+				                                decimals: 2,
+				                                decimalSeparator: ','
+				                            }}"/>
+				                            
+				                    <Label text="Emissão" labelFor="emissao"/>
+									<DatePicker id="emissao" dateValue="{model>/Emissao}" displayFormat="dd.MM.yyyy" placeholder="dd.mm.aaaa"/>
+									
+									<Label text="Vencimento" labelFor="vencimento"/>
+									<DatePicker id="vencimento" dateValue="{model>/Vencimento}" displayFormat="dd.MM.yyyy" placeholder="dd.mm.aaaa"/>
+									
+									<Label text="Total" labelFor="total"/>
+									<Input id="total" value="{path: 'model>/Total', 
+											type: 'sap.ui.model.odata.type.Single',
+				                            formatOptions:{
+				                                decimals: 2,
+				                                decimalSeparator: ','
+				                            }}"/>
+									
+									<Label text="Saldo" labelFor="saldo"/>
+									<Input id="saldo" value="{path: 'model>/Saldo', 
+											type: 'sap.ui.model.odata.type.Single',
+				                            formatOptions:{
+				                                decimals: 2,
+				                                decimalSeparator: ','
+				                            }}"/>
+				                            
+				                    <Label text="Parceiro de negócio" labelFor="parceironegocio"/>
+									<Input selectedKey="{model>/ParceiroNegocio}"
+										textFormatMode="KeyValue"
+										showSuggestion="true"
+										showValueHelp="true"
+										valueHelpRequest="handleSearchParceiro"
+										suggestionItems="{
+											path: '/ParceiroNegocios',
+											events: {
+												dataReceived: '.parceiroNegocioReceived'
+											}}"
+										id="parceironegocio">
+										<suggestionItems>
+											<core:ListItem key="{Id}" text="{RazaoSocial}"/>
+										</suggestionItems>
+									</Input>
+									
+									<Label text="Centro de custo" labelFor="centrocusto"/>
+									<Input selectedKey="{model>/CentroCusto}"
+										textFormatMode="KeyValue"
+										showSuggestion="true"
+										showValueHelp="true"
+										valueHelpRequest="handleSearchCentroCusto"
+										suggestionItems="{
+											path: '/CentroCustos',
+											events: {
+												dataReceived: '.centroCustoReceived'
+											}}"
+										id="centrocusto">
+										<suggestionItems>
+											<core:ListItem key="{Id}" text="{Descricao}"/>
+										</suggestionItems>
+									</Input>
+									
+									<Label text="Conta contábil" labelFor="contacontabil"/>
+									<Input selectedKey="{model>/ContaContabil}"
+										textFormatMode="KeyValue"
+										showSuggestion="true"
+										showValueHelp="true"
+										valueHelpRequest="handleSearchContaContabil"
+										suggestionItems="{
+											path: '/PlanoContas',
+											events: {
+												dataReceived: '.contaContabilReceived'
+											}}"
+										id="contacontabil">
+										<suggestionItems>
+											<core:ListItem key="{Codigo}" text="{Descricao}"/>
+										</suggestionItems>
+									</Input>
+									
+									<Label text="Histórico" labelFor="historico"/>
+									<Input id="historico" value="{model>/Historico}"/>
+								</f:content>
+							</f:SimpleForm>
+						</Panel>
 					</VBox>
 				</content>
 				<footer>
 					<Toolbar>
 						<ToolbarSpacer/>
-						<Button id="salvar" text="Salvar" press="onSalvar"/>
+						<Button icon="sap-icon://save" id="salvar" text="Salvar" press="onSalvar"/>
+						<Button icon="sap-icon://reset" id="voltar" text="Cancelar" press="onVoltar"/>
 					</Toolbar>
 				</footer>
 			</Page>

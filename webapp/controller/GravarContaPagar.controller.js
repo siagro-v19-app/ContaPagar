@@ -6,7 +6,8 @@ sap.ui.define([
 	"idxtec/lib/fragment/ParceiroNegocioHelpDialog",
 	"idxtec/lib/fragment/CentroCustoHelpDialog",
 	"idxtec/lib/fragment/ContaContabilHelpDialog"
-], function(Controller, History, MessageBox, JSONModel, ParceiroNegocioHelpDialog, CentroCustoHelpDialog, ContaContabilHelpDialog) {
+], function(Controller, History, MessageBox, JSONModel, ParceiroNegocioHelpDialog,
+	CentroCustoHelpDialog, ContaContabilHelpDialog) {
 	"use strict";
 
 	return Controller.extend("br.com.idxtecContaPagar.controller.GravarContaPagar", {
@@ -111,7 +112,7 @@ sap.ui.define([
 		
 		onSalvar: function(){
 			if (this._checarCampos(this.getView())) {
-				MessageBox.information("Preencha todos os campos obrigatórios!");
+				MessageBox.warning("Preencha todos os campos obrigatórios!");
 				return;
 			}
 			
@@ -164,7 +165,7 @@ sap.ui.define([
 					uri: "/PlanoContas('" + oDados.ContaContabil + "')"
 				}
 			};
-			debugger;
+
 			return oDados;
 		},
 		

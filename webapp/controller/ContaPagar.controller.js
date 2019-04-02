@@ -16,6 +16,7 @@ sap.ui.define([
 		onRefresh: function(e){
 			var oModel = this.getOwnerComponent().getModel();
 			oModel.refresh(true);
+			this.getView().byId("tableContaPagar").clearSelection();
 		},
 		
 		onIncluir: function(){
@@ -35,7 +36,7 @@ sap.ui.define([
 			var nIndex = oTable.getSelectedIndex();
 			
 			if (nIndex === -1){
-				MessageBox.information("Selecione uma conta a pagar da tabela.");
+				MessageBox.warning("Selecione uma conta a pagar na tabela.");
 				return;
 			}
 			
@@ -53,7 +54,7 @@ sap.ui.define([
 			var nIndex = oTable.getSelectedIndex();
 			
 			if (nIndex === -1){
-				MessageBox.information("Selecione uma conta a pagar na tabela.");
+				MessageBox.warning("Selecione uma conta a pagar na tabela.");
 				return;
 			}
 			
