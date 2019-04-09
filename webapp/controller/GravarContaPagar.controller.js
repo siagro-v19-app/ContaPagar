@@ -3,11 +3,13 @@ sap.ui.define([
 	"sap/ui/core/routing/History",
 	"sap/m/MessageBox",
 	"sap/ui/model/json/JSONModel",
-	"idxtec/lib/fragment/ParceiroNegocioHelpDialog",
-	"idxtec/lib/fragment/CentroCustoHelpDialog",
-	"idxtec/lib/fragment/ContaContabilHelpDialog"
+	"br/com/idxtecContaPagar/helpers/ParceiroNegocioHelpDialog",
+	"br/com/idxtecContaPagar/helpers/CentroCustoHelpDialog",
+	"br/com/idxtecContaPagar/helpers/ContaContabilHelpDialog",
+	"br/com/idxtecContaPagar/helpers/TipoTituloHelpDialog",
+	"br/com/idxtecContaPagar/services/Session"
 ], function(Controller, History, MessageBox, JSONModel, ParceiroNegocioHelpDialog,
-	CentroCustoHelpDialog, ContaContabilHelpDialog) {
+	CentroCustoHelpDialog, ContaContabilHelpDialog, TipoTituloHelpDialog, Session) {
 	"use strict";
 
 	return Controller.extend("br.com.idxtecContaPagar.controller.GravarContaPagar", {
@@ -24,10 +26,6 @@ sap.ui.define([
 			this.getOwnerComponent().setModel(oJSONModel,"model");
 		},
 		
-		getModel : function(sModel) {
-			return this.getOwnerComponent().getModel(sModel);	
-		},
-		
 		parceiroNegocioReceived: function() {
 			this.getView().byId("parceironegocio").setSelectedKey(this.getModel("model").getProperty("/ParceiroNegocio"));
 		},
@@ -40,19 +38,28 @@ sap.ui.define([
 			this.getView().byId("contacontabil").setSelectedKey(this.getModel("model").getProperty("/PlanoConta"));
 		},
 		
+		tipoTituloReceived: function() {
+			this.getView().byId("tipotitulo").setSelectedKey(this.getModel("model").getProperty("/TipoTitulo"));
+		},
+		
 		handleSearchParceiro: function(oEvent){
-			var oHelp = new ParceiroNegocioHelpDialog(this.getView(), "parceironegocio");
-			oHelp.getDialog().open();
+			var sInputId = oEvent.getParameter("id");
+			ParceiroNegocioHelpDialog.handleValueHelp(this.getView(), sInputId, this);
 		},
 		
 		handleSearchCentroCusto: function(oEvent){
-			var oHelp = new CentroCustoHelpDialog(this.getView(), "centrocusto");
-			oHelp.getDialog().open();
+			var sInputId = oEvent.getParameter("id");
+			CentroCustoHelpDialog.handleValueHelp(this.getView(), sInputId, this);
 		},
 		
 		handleSearchContaContabil: function(oEvent){
-			var oHelp = new ContaContabilHelpDialog(this.getView(), "contacontabil");
-			oHelp.getDialog().open();
+			var sInputId = oEvent.getParameter("id");
+			ContaContabilHelpDialog.handleValueHelp(this.getView(), sInputId, this);
+		},
+		
+		handleSearchTipo: function(oEvent){
+			var sInputId = oEvent.getParameter("id");
+			TipoTituloHelpDialog.handleValueHelp(this.getView(), sInputId, this);
 		},
 		
 		_routerMatch: function(){
@@ -66,7 +73,6 @@ sap.ui.define([
 			
 			this.getView().byId("parceironegocio").setValue(null);
 			this.getView().byId("centrocusto").setValue(null);
-			this.getView().byId("contacontabil").setValue(null);
 			
 			if (this._operacao === "incluir"){
 				
@@ -88,7 +94,11 @@ sap.ui.define([
 					"ParceiroNegocio": 0,
 					"CentroCusto": 0,
 					"ContaContabil": "",
-					"Historico": ""
+					"Historico": "",
+					"Empresa" : Session.get("EMPRESA_ID"),
+					"Usuario": Session.get("USUARIO_ID"),
+					"EmpresaDetails": { __metadata: { uri: "/Empresas(" + Session.get("EMPRESA_ID") + ")"}},
+					"UsuarioDetails": { __metadata: { uri: "/Usuarios(" + Session.get("USUARIO_ID") + ")"}}
 				};
 				
 				oJSONModel.setData(oNovoContaPagar);
@@ -102,9 +112,6 @@ sap.ui.define([
 				oModel.read(oParam.sPath,{
 					success: function(oData) {
 						oJSONModel.setData(oData);
-					},
-					error: function(oError) {
-						MessageBox.error(oError.responseText);
 					}
 				});
 			}
@@ -139,8 +146,8 @@ sap.ui.define([
 			var oJSONModel = this.getOwnerComponent().getModel("model");
 			var oDados = oJSONModel.getData();
 			
-			oDados.ParceiroNegocio = oDados.ParceiroNegocio ? parseInt(oDados.ParceiroNegocio, 0) : 0;
-			oDados.CentroCusto = oDados.CentroCusto ? parseInt(oDados.CentroCusto, 0) : 0;
+			oDados.ParceiroNegocio = oDados.ParceiroNegocio ? oDados.ParceiroNegocio : 0;
+			oDados.CentroCusto = oDados.CentroCusto ? oDados.CentroCusto : 0;
 		
 			oDados.TipoTituloDetails = {
 				__metadata: {
@@ -180,9 +187,6 @@ sap.ui.define([
 							that._goBack(); 
 						}
 					});
-				},
-				error: function(oError) {
-					MessageBox.error(oError.responseText);
 				}
 			});
 		},
@@ -193,14 +197,11 @@ sap.ui.define([
 			
 			oModel.update(this._sPath, this._getDados(), {
 					success: function() {
-					MessageBox.success("Conta a pagar inserida com sucesso!", {
+					MessageBox.success("Conta a pagar alterada com sucesso!", {
 						onClose: function(){
 							that._goBack();
 						}
 					});
-				},
-				error: function(oError) {
-					MessageBox.error(oError.responseText);
 				}
 			});
 		},
@@ -216,6 +217,10 @@ sap.ui.define([
 		
 		onVoltar: function(){
 			this._goBack();
+		},
+		
+		getModel : function(sModel) {
+			return this.getOwnerComponent().getModel(sModel);	
 		}
 	});
 });

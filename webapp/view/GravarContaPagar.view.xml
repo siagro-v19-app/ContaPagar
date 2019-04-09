@@ -33,11 +33,21 @@
 									<Input id="titulo" value="{model>/Titulo}" required="true"/>
 									
 									<Label text="Tipo de título" labelFor="tipotitulo" required="true"/>
-									<ComboBox selectedKey="{model>/TipoTitulo}"
-										items="{path: '/TipoTitulos'}"
-										id="tipotitulo"> 
-										<core:ListItem key="{Codigo}" text="{Descricao}"/>
-									</ComboBox>
+									<Input selectedKey="{model>/TipoTitulo}"
+										textFormatMode="KeyValue"
+										showSuggestion="true"
+										showValueHelp="true"
+										valueHelpRequest="handleSearchTipo"
+										suggestionItems="{
+											path: '/TipoTitulos',
+											events: {
+												dataReceived: '.tipoTituloReceived'
+											}}"
+										id="tipotitulo">
+										<suggestionItems>
+											<core:ListItem key="{Codigo}" text="{Descricao}"/>
+										</suggestionItems>
+									</Input>
 									
 									<Label text="Valor" labelFor="valor" required="true"/>
 									<Input id="valor" value="{path: 'model>/Valor', 
@@ -86,7 +96,7 @@
 				                            }}"/>
 				                            
 				                    <Label text="Parceiro de negócio" labelFor="parceironegocio"/>
-									<Input selectedKey="{model>/ParceiroNegocio}"
+									<Input selectedKey="{path: 'model>/ParceiroNegocio', type: 'sap.ui.model.odata.type.Int32'}"
 										textFormatMode="KeyValue"
 										showSuggestion="true"
 										showValueHelp="true"
@@ -103,7 +113,7 @@
 									</Input>
 									
 									<Label text="Centro de custo" labelFor="centrocusto"/>
-									<Input selectedKey="{model>/CentroCusto}"
+									<Input selectedKey="{path: 'model>/CentroCusto', type: 'sap.ui.model.odata.type.Int32'}"
 										textFormatMode="KeyValue"
 										showSuggestion="true"
 										showValueHelp="true"
