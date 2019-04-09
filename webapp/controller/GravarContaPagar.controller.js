@@ -73,6 +73,8 @@ sap.ui.define([
 			
 			this.getView().byId("parceironegocio").setValue(null);
 			this.getView().byId("centrocusto").setValue(null);
+			this.getView().byId("contacontabil").setValue(null);
+			this.getView().byId("tipotitulo").setValue(null);
 			
 			if (this._operacao === "incluir"){
 				
