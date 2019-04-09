@@ -27,8 +27,6 @@ sap.ui.define([
 			this.setModel(models.createViewModel(), "view");
 			
 			this.getRouter().initialize();
-			
-			jQuery.sap.registerModulePath("idxtec.lib.fragment", "/resources/idxtec/lib/fragment");
 		},
 		
 		destroy: function(){
