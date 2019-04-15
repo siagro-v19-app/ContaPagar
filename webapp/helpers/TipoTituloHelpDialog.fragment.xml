@@ -3,8 +3,12 @@
 	xmlns:core="sap.ui.core">
 	<SelectDialog
 		title="Tipo de Título"
-		class="sapUiPopupWithPadding"
-		items="{/TipoTitulos}"
+		class="sapUiPopupWithPadding sapUiSizeCompact"
+		items="{path: '/TipoTitulos',
+			sorter: {
+				path: 'Descricao'
+			}
+		}"
 		search="_handleValueHelpSearch"
 		confirm="_handleValueHelpClose"
 		cancel="_handleValueHelpClose">

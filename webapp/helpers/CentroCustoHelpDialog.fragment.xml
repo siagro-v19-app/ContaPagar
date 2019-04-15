@@ -3,8 +3,12 @@
 	xmlns:core="sap.ui.core">
 	<SelectDialog
 		title="Centro de custo"
-		class="sapUiPopupWithPadding"
-		items="{/CentroCustos}"
+		class="sapUiPopupWithPadding sapUiSizeCompact"
+		items="{path: '/CentroCustos',
+			sorter: {
+				path: 'Descricao'
+			}
+		}"
 		search="_handleValueHelpSearch"
 		confirm="_handleValueHelpClose"
 		cancel="_handleValueHelpClose">
