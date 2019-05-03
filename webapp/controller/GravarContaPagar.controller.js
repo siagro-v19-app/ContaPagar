@@ -174,7 +174,7 @@ sap.ui.define([
 					uri: "/PlanoContas('" + oDados.ContaContabil + "')"
 				}
 			};
-
+			debugger;
 			return oDados;
 		},
 		
